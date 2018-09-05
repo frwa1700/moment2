@@ -29,3 +29,31 @@
 6. browser-sync - Webserver som körs för att kunna ladda om sidor vid ändringar.
 7. run-sequence - Köra "tasks" i sekvenser.
 8. del - Radera filer.
+
+## Installation
+
+## Beskrivning
+### Tasks
+#### images:copy
+
+#### image:build
+
+#### html:copy
+
+#### css:copy
+
+#### css:build
+
+#### js:copy
+
+#### js:build
+
+#### pages:create
+
+#### pages:build
+
+#### del:dev
+
+#### start-server
+
+#### start-watchers

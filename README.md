@@ -20,9 +20,12 @@
 |    |____html
 ```
 ## Följande plugins används
-gulp-newer
-gulp-inject
-gulp-imagemin
-gulp-concat
-gulp-clean-css
-browser-sync
+1. gulp-newer - Används för att se om en fil har ändrats eller är ny.
+2. gulp-inject - Injicerar css- och js-filer i HTML-filer.
+3. gulp-imagemin - Komprimering av bilder.
+4. gulp-concat - Slår ihop filer.
+5. gulp-clean-css - Minifierar CSS-filer.
+6. gulp-uglify - Minifierar JS
+6. browser-sync - Webserver som körs för att kunna ladda om sidor vid ändringar.
+7. run-sequence - Köra "tasks" i sekvenser.
+8. del - Radera filer.

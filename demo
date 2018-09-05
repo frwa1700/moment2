@@ -1,5 +1,0 @@
-# Change to project name later
-
-## Katalogstruktur -a echo apa
-```bash
-find . -type d \( -path "*/node_modules*" -o -path "*/.*"  \) -prune -o -type d -print | sed -e 's;[^/]*/;|____;g;s;____|;    |;g'

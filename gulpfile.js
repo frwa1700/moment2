@@ -12,6 +12,7 @@ var
     imagemin = require('gulp-imagemin'),
     concat = require('gulp-concat'),
     cleanCSS = require('gulp-clean-css'),
+    uglify = require('gulp-uglify'),
     browserSync = require('browser-sync').create(),
     runSequence = require('run-sequence'),
     del = require('del');
@@ -30,7 +31,17 @@ var
         devCSS: 'dev/css/',
         devHTML: 'dev/',
         devJS: 'dev/js/',
-        devImages: 'dev/images/'
+        devImages: 'dev/images/',
+
+        // Build-directories and settings
+        build : {
+            dir: 'build/',
+            buildCSS: 'build/css/',
+            buildJS: 'build/js/',
+            buildImages: 'build/images/',
+            nameCSS: 'style',
+        }
+
     }
 
     // Create gulp tasks
@@ -43,6 +54,17 @@ var
                 .pipe(newer(out))
                 .pipe(imagemin({optimizationLevel: 5}));
             
+        return image.pipe(gulp.dest(out));
+    })
+
+    gulp.task('images:build', function(){
+        console.log('Building images...');
+        var
+            out = folder.build.buildImages,
+            image = gulp.src(folder.srcImages + '**/*.{jpg,jpeg,png,svg,gif}')
+                .pipe(newer(out))
+                .pipe(imagemin({optimizationLevel: 5}));
+
         return image.pipe(gulp.dest(out));
     })
 
@@ -60,8 +82,21 @@ var
         var
             out = folder.devCSS,
             fileName = 'style.css',
-            css = gulp.src(folder.srcCss)
-                .pipe(concat(fileName))
+            css = gulp.src(folder.srcCss + '*.css')
+                .pipe(concat(fileName))  // Concat all css into one file
+                .pipe(newer(out));
+
+        return css.pipe(gulp.dest(out));
+    });
+
+    // Concats, minifies and copies the CSS to build.
+    gulp.task('css:build', function(){
+        console.log('Building CSS...');
+        var
+            out = folder.build.buildCSS,
+            css = gulp.src(folder.srcCss + '*.css')
+                .pipe(concat(folder.build.nameCSS + '.min.css'))
+                .pipe(cleanCSS())  // Miniify css
                 .pipe(newer(out));
 
         return css.pipe(gulp.dest(out));
@@ -71,8 +106,18 @@ var
     gulp.task('js:copy', function(){
         var
             out = folder.devJS,
-            js = gulp.src(folder.srcJS)
+            js = gulp.src(folder.srcJS + '*.js')
                 .pipe(newer(out));
+        return js.pipe(gulp.dest(out));
+    });
+
+    gulp.task('js:build', function(){
+        var
+            out = folder.build.buildJS,
+            js = gulp.src(folder.srcJS + '*.js')
+                .pipe(uglify()) // Minify JS
+                .pipe(newer(out));
+                
         return js.pipe(gulp.dest(out));
     });
 
@@ -90,9 +135,24 @@ var
         return page.pipe(gulp.dest(out)); // Save file
     });
 
+    gulp.task('pages:build',['images:build', 'js:build', 'css:build'], function(){
+        console.log('Building pages');
+        var
+            out = folder.build.dir,
+            css = gulp.src(folder.build.buildCSS + '*.css', {read: false} ),
+            js = gulp.src(folder.build.buildJS + '*.js', {read: false} ),
+
+            page = gulp.src(folder.srcHTML + '*.html')
+                .pipe(inject(css, {ignorePath:folder.build.dir, addRootSlash: false})) // Inject CSS
+                .pipe(inject(js, {ignorePath:folder.build.dir, addRootSlash: false})); // Inject JavaScript
+                // CLEAN HTML HERE
+        
+        return page.pipe(gulp.dest(out));
+    });
+
     // Deletes dev-directory
     gulp.task('del:dev', function(){
-        del(folder.dev);
+        return del(folder.dev);
     })
 
 
@@ -112,7 +172,6 @@ var
         gulp.watch(folder.srcJS + '.js', ['js:copy']); //Copies JS-files
         gulp.watch(folder.srcImages + '**/*.{jpg,jpeg,png,svg,gif}', ['images:copy']); // Copies images
         gulp.watch(folder.dev + '**/*', browserSync.reload); // Reload browser when files changes
-
     })
     
     /**
@@ -126,3 +185,12 @@ var
     gulp.task('start-dev', function(callback){
         runSequence('del:dev', 'pages:create','start-server', 'start-watchers', callback);
     })
+
+    /**
+     * Tasks to run at build
+     * 
+     * MAke pages and delete dev-files.
+     */
+    gulp.task('build', ['pages:build', 'del:dev'], function(){
+        console.log('Building complete');
+    });

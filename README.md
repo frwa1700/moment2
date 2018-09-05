@@ -39,10 +39,10 @@ Katalogstrukturen som skapas är följande:
 #### 
 
 #### images:copy
-Kopierar och komprimerar bilder från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
+Kopierar och komprimerar bilder från källkods-filer (_folder.srcImages_) till _utvecklings-filer_ (folder.devImages).
 
 #### image:build
-Kopierar och komprimerar bilder från _källkods-filer_ (src) till _färdiga filer_ (build).
+Kopierar och komprimerar bilder från _källkods-filer_ (folder.srcImages) till _färdiga filer_ (folder.build.buildImages).
 
 #### html:copy
 Kopierar HTML-filer från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
@@ -54,9 +54,6 @@ Kopierar typsnitt från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
 Kopierar typsnitt från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
 
 #### css:copy
-Funktion: `Flytta och bearbeta filer`<br>
-Infil(er): `folder.srcCSS + '*.css'`<br>
-Utfil: `folder.devCSS + 'style.css'`<br>
 Kopierar och slår ihop CSS-filer från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
 
 #### css:build

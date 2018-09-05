@@ -151,7 +151,7 @@ var
             css = gulp.src(folder.devCSS + '*.css', {read: false} ),
             js = gulp.src(folder.devJS + '*.js', {read: false} ),
 
-            page = gulp.src(folder.srcHTML)
+            page = gulp.src(folder.srcHTML + '*.html')
                 .pipe(inject(css, {ignorePath:folder.dev, addRootSlash: false})) // Inject CSS
                 .pipe(inject(js, {ignorePath:folder.dev, addRootSlash: false})) // Inject JavaScript
 

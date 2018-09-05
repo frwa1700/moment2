@@ -36,38 +36,67 @@ Katalogstrukturen som skapas är följande:
 
 
 ### Tasks
-#### 
+#### start-dev
+Default-uppgift som körs när enbart `gulp` anges.<br>
+Kör uppgifterna `del:dev`, `pages:create`, `start-server`, `start-watchers`<br>
+Används för att köra utvecklar-läge.
+
+#### build
+Skapar en färdig _build_ att publicera i katalogen **build**
+Kör uppgifterna: `pages:build`, `del:dev`
 
 #### images:copy
-Kopierar och komprimerar bilder från källkods-filer (_folder.srcImages_) till _utvecklings-filer_ (folder.devImages).
+Kopierar och komprimerar **nya/ändrade**  bilder från _källkods-filer_ (**folder.srcImages**) till _utvecklings-filer_ (**folder.devImages**).
 
 #### image:build
-Kopierar och komprimerar bilder från _källkods-filer_ (folder.srcImages) till _färdiga filer_ (folder.build.buildImages).
+Kopierar och komprimerar **nya/ändrade** bilder från _källkods-filer_ (*folder.srcImages*) till _färdiga filer_ (**folder.build.buildImages**).
 
 #### html:copy
-Kopierar HTML-filer från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
+Kopierar **nya/ändrade**  HTML-filer från _källkods-filer_ (**folder.srcHTML**) till _utvecklings-filer_ (**folder.devHTML**).
 
 #### fonts:copy
-Kopierar typsnitt från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
+Kopierar **nya/ändrade** typsnitt från _källkods-filer_ (**folder.srcFonts**) till _utvecklings-filer_ (**folder.devFonts**).
 
 #### fonts:build
-Kopierar typsnitt från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
+Kopierar typsnitt från _källkods-filer_ (**folder.srcFonts**) till _färdiga filer_ (**folder.build.buildFonts**).
 
 #### css:copy
-Kopierar och slår ihop CSS-filer från _källkods-filer_ (src) till _utvecklings-filer_ (dev).
+Kopierar och slår ihop **alla** CSS-filer från _källkods-filer_ (**folder.srcCss**) till _utvecklings-filer_ (**folder.devCSS**).
+Den ihopslagna CSS-filens namn: `style.css`<br>
 
 #### css:build
+Kopierar, slår ihop och minifierar CSS-filer från _källkods-filer_ (**folder.srcCss**) till _färdiga filer_ (**folder.build.nameCSS**).
+Den ihopslagna och minifierade CSS-filens namn: `style.min.css`<br>
 
 #### js:copy
+Kopierar **nya/ändrade** JavaScript från _källkods-filer_ (**folder.srcJS**) till _färdiga filer_ (**folder.devJS**).
 
 #### js:build
+Kopierar och slår ihop JavaScript från _källkods-filer_ (**folder.srcJS**) till _färdiga filer_ (**folder.build.buildJS**).
+Den ihopslagna JS-filens namn: `script.js`<br>
 
 #### pages:create
+Kör uppgifterna: `images:copy`, `js:copy`, `fonts:copy`, `css:copy`<br>
+Efter det injiceras Styleshhet och JavaScript i alla HTML-filer.
 
 #### pages:build
+Kör uppgifterna: `images:build`, `js:build`, `fonts:build`, `css:build`<br>
+Efter det injiceras Styleshhet och JavaScript i alla HTML-filer.
 
 #### del:dev
+Raderar **alla** _utvecklings-filer_ (**folder.devCSS**).
+Anänds innan utvecklings-läge startas för att säkerställa att inga gamla filer finns kvar.
 
 #### start-server
+Startar den inbygggda webbservern `browserSync`<br>
 
 #### start-watchers
+Skapar watches för att uppdatea automatiskt vid filändringar.
+```
+    gulp.watch(folder.srcHTML + '.html', ['pages:create']); // Copy new html/css/js/images and injects css/js into html-files
+    gulp.watch(folder.srcCss + '.css', ['css:copy']); // Concat and copies CSS-files a
+    gulp.watch(folder.srcFonts, ['fonts:copy']); // Copy fonts to dev
+    gulp.watch(folder.srcJS + '.js', ['js:copy']); //Copies JS-files
+    gulp.watch(folder.srcImages + '**/*.{jpg,jpeg,png,svg,gif}', ['images:copy']); // Copies images
+    gulp.watch(folder.dev + '**/*', browserSync.reload); // Reload browser when files changes
+````

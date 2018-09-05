@@ -31,7 +31,7 @@
 # Change to project name later\
 \
 ## Katalogstruktur\
-\\`\\`\\`bash\
+\\`\\`\\`\
 DELIM\
 find . -type d \\( -path "*/node_modules*" -o -path "*/.*"  \\) -prune -o -type d -print | sed -e 's;[^/]*/;|____;g;s;____|;    |;g' >> README.md
 \f0 \
@@ -42,8 +42,8 @@ find . -type d \\( -path "*/node_modules*" -o -path "*/.*"  \\) -prune -o -type 
 # ignore files\
 /node_modules\
 .DS_Store\
-package-lock.json\
 /dev\
+/build\
 DELIM
 \f0 \
 \

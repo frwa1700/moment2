@@ -1,6 +1,7 @@
 # Moment 2 i kursen DT173G - Webbutveckling III
 
-## Installation
+## Syfte
+Syftet med att skapa automatiserings-processer är att det snabbar upp och förenklar utveckling. Detta då man slipper göra många moment manuellt och det går enkelt att dela upp utvecklingen på flera filer för att sedan slå ihop dessa.
 
 ## Beskrivning
 
@@ -29,10 +30,11 @@ Katalogstrukturen som skapas är följande:
 3. gulp-imagemin - Komprimering av bilder.
 4. gulp-concat - Slår ihop filer.
 5. gulp-clean-css - Minifierar CSS-filer.
-6. gulp-uglify - Minifierar JS
-6. browser-sync - Webserver som körs för att kunna ladda om sidor vid ändringar.
-7. run-sequence - Köra "tasks" i sekvenser.
-8. del - Radera filer.
+6. gulp-htmlclean - Rensar HTML-filer från extra mellanslag, kommentarer m.m.
+7. gulp-uglify - Minifierar JS
+8. browser-sync - Webserver som körs för att kunna ladda om sidor vid ändringar.
+9. run-sequence - Köra "tasks" i sekvenser.
+10. del - Radera filer.
 
 
 ### Tasks
@@ -81,7 +83,8 @@ Efter det injiceras Styleshhet och JavaScript i alla HTML-filer.
 
 #### pages:build
 Kör uppgifterna: `images:build`, `js:build`, `fonts:build`, `css:build`<br>
-Efter det injiceras Styleshhet och JavaScript i alla HTML-filer.
+Efter de uppgifterna injiceras CSS- och JS-filer innan HTML-filerna rensas från bl.a. kommenterer.
+Filerna sparas till _färdiga filer_ (**folder.build.dir**).
 
 #### del:dev
 Raderar **alla** _utvecklings-filer_ (**folder.devCSS**).

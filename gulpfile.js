@@ -12,6 +12,7 @@ var
     imagemin = require('gulp-imagemin'),
     concat = require('gulp-concat'),
     cleanCSS = require('gulp-clean-css'),
+    cleanHTML = require('gulp-htmlclean'),
     uglify = require('gulp-uglify'),
     browserSync = require('browser-sync').create(),
     runSequence = require('run-sequence'),
@@ -167,8 +168,8 @@ var
 
             page = gulp.src(folder.srcHTML + '*.html')
                 .pipe(inject(css, {ignorePath:folder.build.dir, addRootSlash: false})) // Inject CSS
-                .pipe(inject(js, {ignorePath:folder.build.dir, addRootSlash: false})); // Inject JavaScript
-                // CLEAN HTML HERE
+                .pipe(inject(js, {ignorePath:folder.build.dir, addRootSlash: false})) // Inject JavaScript
+                .pipe(cleanHTML());
         
         return page.pipe(gulp.dest(out));
     });

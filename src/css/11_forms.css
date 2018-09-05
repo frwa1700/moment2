@@ -1,0 +1,41 @@
+/* Concatc form */
+#contact-div {
+    display: none;
+    position: relative;
+    right: 0;
+    background: rgba(55,55,55,.8);
+}
+
+#contact-div fieldset {
+    padding: 1em 0;
+    border: 0;
+    margin: auto 20px;
+}
+#contact-div h3 {
+    text-align: center;
+    padding-top: 10px;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+button,
+textarea {
+    display: block;
+    font-size: 1em;
+    margin-bottom: .5em;
+    box-sizing: border-box;
+    border: 1px solid #d1d1d1;
+    width: 100%;
+    resize: none;
+}
+
+button {
+    color: #373737;
+    text-transform: uppercase;
+}
+button:hover {
+    color: #aaa;
+    background: #373737;
+    text-transform: uppercase;
+}

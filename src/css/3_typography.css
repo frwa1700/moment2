@@ -1,0 +1,68 @@
+/**
+ * 3.0 Typography
+ */
+ @import url('https://fonts.googleapis.com/css?family=Roboto');
+ @import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+
+ body {
+	background-color: #00864F;
+	font-size: 100%;
+	font-family: "Roboto", sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+h1 {
+    font-size: 3em;
+    line-height: 1em;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 400;
+}
+h2 {
+    font-size: 2.25em;
+    line-height: 1.333em;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 400;
+}
+h3 {
+    font-size: 1.5em;
+    line-height: 1em;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 400;
+}
+h4 {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 400;
+}
+h5,h6 {
+    font-size: 1em;
+    line-height: 1.5em;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 400;
+}
+
+p {
+    font-size: 1em;
+    line-height:1.5em;
+    margin-bottom: 1.5em;
+    font-family: "Roboto", sans-serif;
+}
+blockquote {
+    font-size: 1.5em;
+    line-height: 1.45833333em;
+}
+span {
+    display: inline-block;
+    font-family: inherit;
+    font-size:1em;
+    line-height: 1.5em;
+}
+b{
+    font-weight: bold;
+}
+em{
+    font-style: italic;
+}

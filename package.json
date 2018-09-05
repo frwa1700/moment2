@@ -1,0 +1,25 @@
+{
+  "name": "moment2",
+  "version": "1.0.0",
+  "description": "Moment 2 i kursen DT175G",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "moment2"
+  },
+  "keywords": [
+    "gulp",
+    "test",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Fredrik Waldfelt",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

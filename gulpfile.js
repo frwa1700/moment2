@@ -22,6 +22,7 @@ var
         // Source-directories
         src: 'src/',
         srcCss: 'src/css/**/*',
+        srcFonts: 'src/fonts/**/*',
         srcHTML: 'src/html/**/*',
         srcJS: 'src/js/**/*',
         srcImages: 'src/images/', // Only take images in one directory
@@ -29,6 +30,7 @@ var
         // Testing-directories
         dev: 'dev/',
         devCSS: 'dev/css/',
+        devFonts: 'dev/fonts/',
         devHTML: 'dev/',
         devJS: 'dev/js/',
         devImages: 'dev/images/',
@@ -37,6 +39,7 @@ var
         build : {
             dir: 'build/',
             buildCSS: 'build/css/',
+            buildFonts: 'build/fonts/',
             buildJS: 'build/js/',
             buildImages: 'build/images/',
             nameCSS: 'style',
@@ -76,6 +79,25 @@ var
                 .pipe(newer(out)) // Only pipe new files
         return page.pipe(gulp.dest(out)); // Save file
     })
+    
+    // Task to copy fonts to dev
+    gulp.task('fonts:copy', function(){
+        var
+            out = folder.devFonts,
+            fonts = gulp.src(folder.srcFonts)
+                .pipe(newer(out));
+
+        return fonts.pipe(gulp.dest(out));
+    })
+    // Task to copy fonts to dev
+    gulp.task('fonts:build', function(){
+        var
+            out = folder.build.buildFonts,
+            fonts = gulp.src(folder.srcFonts)
+                .pipe(newer(out));
+
+        return fonts.pipe(gulp.dest(out));
+    })
 
     // Task to copy CSS-files to dev
     gulp.task('css:copy', function(){
@@ -83,8 +105,8 @@ var
             out = folder.devCSS,
             fileName = 'style.css',
             css = gulp.src(folder.srcCss + '*.css')
-                .pipe(concat(fileName))  // Concat all css into one file
-                .pipe(newer(out));
+                .pipe(concat(fileName));  // Concat all css into one file
+                
 
         return css.pipe(gulp.dest(out));
     });
@@ -112,6 +134,7 @@ var
     });
 
     gulp.task('js:build', function(){
+        console.log('Copying fonts');
         var
             out = folder.build.buildJS,
             js = gulp.src(folder.srcJS + '*.js')
@@ -122,7 +145,7 @@ var
     });
 
     // Task to create page by inserting CSS, JS
-    gulp.task('pages:create',['images:copy', 'css:copy','js:copy','html:copy'], function(){
+    gulp.task('pages:create',['images:copy','fonts:copy', 'css:copy','js:copy','html:copy'], function(){
         var
             out = folder.devHTML,
             css = gulp.src(folder.devCSS + '*.css', {read: false} ),
@@ -135,7 +158,7 @@ var
         return page.pipe(gulp.dest(out)); // Save file
     });
 
-    gulp.task('pages:build',['images:build', 'js:build', 'css:build'], function(){
+    gulp.task('pages:build',['images:build', 'js:build', 'fonts:build', 'css:build'], function(){
         console.log('Building pages');
         var
             out = folder.build.dir,
@@ -169,6 +192,7 @@ var
     gulp.task('start-watchers', function(){
         gulp.watch(folder.srcHTML + '.html', ['pages:create']); // Copy new html/css/js/images and injects css/js into html-files
         gulp.watch(folder.srcCss + '.css', ['css:copy']); // Concat and copies CSS-files a
+        gulp.watch(folder.srcFonts, ['fonts:copy']); // Copy fonts to dev
         gulp.watch(folder.srcJS + '.js', ['js:copy']); //Copies JS-files
         gulp.watch(folder.srcImages + '**/*.{jpg,jpeg,png,svg,gif}', ['images:copy']); // Copies images
         gulp.watch(folder.dev + '**/*', browserSync.reload); // Reload browser when files changes
@@ -185,6 +209,9 @@ var
     gulp.task('start-dev', function(callback){
         runSequence('del:dev', 'pages:create','start-server', 'start-watchers', callback);
     })
+    gulp.task('default', function(callback){
+        runSequence('del:dev', 'pages:create','start-server', 'start-watchers', callback);
+    })
 
     /**
      * Tasks to run at build
@@ -194,3 +221,4 @@ var
     gulp.task('build', ['pages:build', 'del:dev'], function(){
         console.log('Building complete');
     });
+
